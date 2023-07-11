@@ -2,7 +2,9 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
 import ckanext.facet_scheming.helpers as helpers
+import ckanext.facet_scheming.validators as validators
 import ckanext.facet_scheming.config as fs_config
+from ckanext.scheming.plugins import SchemingDatasetsPlugin, SchemingGroupsPlugin, SchemingOrganizationsPlugin
 from ckanext.facet_scheming.faceted import Faceted
 from ckanext.facet_scheming.package_controller import PackageController
 from ckan.lib.plugins import DefaultTranslation
@@ -12,13 +14,17 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class FacetSchemingPlugin(plugins.SingletonPlugin, Faceted, PackageController, DefaultTranslation):
+class FacetSchemingPlugin(plugins.SingletonPlugin,
+                           Faceted, 
+                           PackageController, 
+                           DefaultTranslation):
 
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets)
     plugins.implements(plugins.IPackageController)
     plugins.implements(plugins.ITranslation)
+    plugins.implements(plugins.IValidators)
 
 # IConfigurer
 
@@ -60,7 +66,49 @@ class FacetSchemingPlugin(plugins.SingletonPlugin, Faceted, PackageController, D
         self.facet_load_config(config_.get(
             'facet_scheming.facet_list',
             '').split())
-
+        
+        #Aprovecho python para hacer cosas que harian vomitar a una cabra programadora...
+        
     def get_helpers(self):
         respuesta = dict(helpers.all_helpers)
         return respuesta
+    
+    def get_validators(self):
+        logger.debug("Validadores: {0}".format(dict(validators.all_validators)))
+        return dict(validators.all_validators)
+
+class FacetSchemingDatasetsPlugin(SchemingDatasetsPlugin):
+    plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IConfigurable)
+    plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IDatasetForm, inherit=True)
+    plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IValidators)
+
+    def read_template(self):
+        return 'facet_scheming/package/read.html'
+    
+    def resource_template(self):
+        return 'facet_scheming/package/resource_read.html'
+
+class FacetSchemingGroupsPlugin(SchemingGroupsPlugin):
+    plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IGroupForm, inherit=True)
+    plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IValidators)
+
+    def about_template(self):
+        return 'facet_scheming/group/about.html'
+
+class SchemingOrganizationsPlugin(SchemingOrganizationsPlugin):
+    plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IGroupForm, inherit=True)
+    plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IValidators)
+    
+    def about_template(self):
+        return 'facet_scheming/organization/about.html'
+
+    

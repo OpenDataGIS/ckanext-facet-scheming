@@ -78,3 +78,39 @@ option.icon_option{
 	background-size:15px;
 	padding-left:17px;
 }
+
+/* Links list*/
+.link-list { 
+  list-style-type: "🔗 ";
+  vertical-align: middle;
+}
+
+.link-list li::marker {
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+/* Keywords list*/
+.keyword-list { 
+  list-style-type: "🏷️ ";
+  vertical-align: middle;
+}
+
+.keyword-list li::marker {
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+/* INSPIRE Themes list-NTI-RISP spatial URIs list */
+.scheming-icon-list {
+  list-style-type: none;
+  padding-left: 1em;
+  line-height: 2em;
+}
+
+.scheming-icon-list-icon {
+  vertical-align: middle;
+  height: 1.6em;
+  display: inline-block;
+}
+.scheming-icon-list-icon:hover { cursor:pointer }
