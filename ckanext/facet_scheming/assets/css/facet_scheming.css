@@ -79,6 +79,16 @@ option.icon_option{
 	padding-left:17px;
 }
 
+/* Iconos para spatial_uri */
+
+img.spatial_uri-icon {
+	vertical-align: middle;
+	height: 1.6em;
+	display: inline-block;
+	border-radius: 50%;
+	margin-left: 1em;
+}
+
 /* Links list*/
 .link-list { 
   list-style-type: "🔗 ";
