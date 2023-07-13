@@ -86,6 +86,9 @@ setup(
     entry_points='''
         [ckan.plugins]
         facet_scheming=ckanext.facet_scheming.plugin:FacetSchemingPlugin
+        facet_scheming_datasets=ckanext.facet_scheming.plugin:FacetSchemingDatasetsPlugin
+        facet_scheming_groups=ckanext.facet_scheming.plugin:FacetSchemingGroupsPlugin
+        facet_scheming_organizations=ckanext.facet_scheming.plugin:SchemingOrganizationsPlugin
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan

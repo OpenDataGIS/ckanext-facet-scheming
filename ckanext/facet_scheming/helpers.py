@@ -1,6 +1,7 @@
 from ckan.common import json, c, request, is_flask_request
 from ckan.lib import helpers as ckan_helpers
 import ckan.plugins as p
+import six
 
 from six.moves.urllib.parse import urlencode
 
@@ -289,3 +290,35 @@ def fscheming_get_choice_dic(field, value):
                 return choice
 
     return None
+
+@helper
+def scheming_display_json_list(value):
+    """
+    Returns the object passed serialized as a JSON list.
+
+    :param value: The object to serialize.
+    :rtype: string
+    """
+    if isinstance(value, six.string_types):
+        return value
+    try:
+        return json.loads(value)
+    except (TypeError, ValueError):
+        return value
+
+@helper
+def scheming_clean_json_value(value):
+    """
+    Clean a JSON list value to avoid errors with: '"' and spaces.
+
+    :param value: The object to serialize.
+    :rtype: string
+    """
+    try:
+        value = value.strip(' ').replace('\\"', '%%%@#')
+        value = value.replace('"', '')
+        value = value.replace('%%%@#', '"')
+        return value
+    except (TypeError, ValueError):
+        return value
+

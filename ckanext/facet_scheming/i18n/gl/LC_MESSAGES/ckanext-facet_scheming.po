@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-facet_scheming 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-14 09:34+0200\n"
+"POT-Creation-Date: 2023-07-04 11:54+0200\n"
 "PO-Revision-Date: 2023-06-14 09:34+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: gl\n"
@@ -22,19 +22,19 @@ msgstr ""
 
 #: ckanext/facet_scheming/templates/group/read.html:13
 msgid "Relevancia"
-msgstr ""
+msgstr "Relevancia"
 
 #: ckanext/facet_scheming/templates/group/read.html:14
 msgid "Nombre Ascendente"
-msgstr ""
+msgstr "Nome Ascendente"
 
 #: ckanext/facet_scheming/templates/group/read.html:15
 msgid "Nombre Descendente"
-msgstr ""
+msgstr "Nome Descendente"
 
 #: ckanext/facet_scheming/templates/group/read.html:16
 msgid "Último Modificado"
-msgstr ""
+msgstr "Última modificación"
 
 #: ckanext/facet_scheming/templates/group/read.html:17
 msgid "Popular"
@@ -51,6 +51,110 @@ msgstr ""
 
 #: ckanext/facet_scheming/templates/organization/read.html:15
 msgid "Cerrar"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/form_snippets/multiple_text.html:14
+msgid "Remove"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/form_snippets/multiple_text.html:45
+msgid "Add"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:21
+msgid "Additional Information"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:26
+msgid "Field"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:27
+msgid "Value"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:34
+msgid "Data last updated"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:35
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:41
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:47
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:53
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:65
+msgid "unknown"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:40
+msgid "Metadata last updated"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:46
+msgid "Created"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:52
+msgid "Format"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:58
+msgid "License"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/resource_read.html:64
+msgid "Rights"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:155
+msgid "Additional Info"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:179
+msgid "Punto de contacto"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:207
+msgid "Información espacial"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:232
+msgid "Procedencia"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:252
+msgid "Linaje"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:270
+msgid "Extensión temporal"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:288
+msgid "More information"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:306
+msgid "Version"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:324
+msgid "State"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:333
+msgid "Organización responsable"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:338
+msgid "Publicador"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:356
+msgid "Author"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/scheming/package/snippets/additional_info.html:374
+msgid "Maintainer"
 msgstr ""
 
 #: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:51
@@ -84,4 +188,8 @@ msgstr ""
 #: ckanext/facet_scheming/templates/snippets/fscheming_facet_search_operator.html:57
 msgid "Todos"
 msgstr ""
+
+# translations for ckanext-scheming
+#~ msgid "Update {page}"
+#~ msgstr "Actualizar {page}"
 
