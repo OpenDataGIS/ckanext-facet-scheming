@@ -1,0 +1,11 @@
+{% extends "package/read_base.html" %}
+{% import 'macros/form.html' as form %}
+
+{% block primary_content_inner %}
+  <h2 class="hide-heading">{{ _('Linked Data') }}</h2>
+
+    <form method="post">
+      {% snippet 'facet_scheming/linked_data/snippets/linked_data_list.html', data_links=data_links, id=id %}
+    </form>
+
+{% endblock %}

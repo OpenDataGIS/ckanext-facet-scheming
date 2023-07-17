@@ -4,6 +4,7 @@ import logging
 import os
 import hashlib
 from threading import Lock
+from ckanext.dcat.utils import CONTENT_TYPES
 
 logger = logging.getLogger(__name__)
 
@@ -88,3 +89,16 @@ def public_dir_exists(path):
             return True
 
     return False
+
+def get_linked_data():
+    data_links=[]
+    for name in CONTENT_TYPES:
+        data_links.append({
+            'name': name,
+            'display_name': CONTENT_TYPES[name],
+            'image_display_url': None,
+            'description': 'Tipo '+CONTENT_TYPES[name]
+        })
+
+    return data_links
+        

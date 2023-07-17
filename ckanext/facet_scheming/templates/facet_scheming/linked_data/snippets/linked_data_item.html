@@ -1,0 +1,44 @@
+{#
+
+Inspired by /group/snippets/group_item.html
+
+Renders a media item for a linked data. This should be used in a list.
+
+data_link - A linked_data dict.
+id - dataset's id
+
+Example:
+
+    <ul class="media-grid">
+      {% for link in data_links %}
+        {% snippet "facet_scheming/linked_data/snippets/linked_data_item.html", data_link=data_link, id=id %}
+      {% endfor %}
+    </ul>
+#}
+{#% set type = group.type or 'group' %#}
+{% set url = h.url_for('dcat.read_dataset', _id=id, _format=data_link.name) %}
+{% block item %}
+<li class="media-item">
+  {% block item_inner %}
+  {% block image %}
+    <img src="{{ data_link.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" alt="{{ data_link.name }}" class="media-image img-responsive">
+  {% endblock %}
+  {% block title %}
+    <h2 class="media-heading">{{ data_link.display_name }}</h2>
+  {% endblock %}
+  {% block description %}
+    {% if data_link.description %}
+      <p class="media-description">{{ h.markdown_extract(data_link.description, extract_length=80) }}</p>
+    {% endif %}
+  {% endblock %}
+  {% block link %}
+  <a href="{{ url }}" title="{{ _('View {name}').format(name=data_link.display_name) }}" class="media-view" target="_blank">
+    <span>{{ _('View {name}').format(name=data_link.display_name) }}</span>
+  </a>
+  {% endblock %}
+  {% endblock %}
+</li>
+{% endblock %}
+{% if position is divisibleby 3 %}
+  <li class="clearfix js-hide"></li>
+{% endif %}

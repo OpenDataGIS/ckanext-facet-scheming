@@ -6,6 +6,7 @@ import ckanext.facet_scheming.validators as validators
 import ckanext.facet_scheming.config as fs_config
 from ckanext.scheming.plugins import SchemingDatasetsPlugin, SchemingGroupsPlugin, SchemingOrganizationsPlugin
 from ckanext.facet_scheming.faceted import Faceted
+from ckanext.facet_scheming import blueprint
 from ckanext.facet_scheming.package_controller import PackageController
 from ckan.lib.plugins import DefaultTranslation
 
@@ -25,6 +26,8 @@ class FacetSchemingPlugin(plugins.SingletonPlugin,
     plugins.implements(plugins.IPackageController)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IValidators)
+    plugins.implements(plugins.IBlueprint)
+
 
 # IConfigurer
 
@@ -76,6 +79,11 @@ class FacetSchemingPlugin(plugins.SingletonPlugin,
     def get_validators(self):
         logger.debug("Validadores: {0}".format(dict(validators.all_validators)))
         return dict(validators.all_validators)
+
+    #IBlueprint
+    def get_blueprint(self):
+        return blueprint.fscheming
+
 
 class FacetSchemingDatasetsPlugin(SchemingDatasetsPlugin):
     plugins.implements(plugins.IConfigurer)
