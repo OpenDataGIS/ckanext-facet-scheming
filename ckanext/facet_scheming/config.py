@@ -6,38 +6,35 @@ group_custom_facets = False
 
 #{% set ['ttl', 'rdf', 'xml', 'n3', 'jsonld' ]
 
-data_links=[
-    {
+data_links={
+    'ttl':{
         'name': 'ttl',
         'display_name': 'fichero ttl',
         'image_display_url': None,
-        'description': 'Descripción ttl'
+        'description': 'Terse RDF Triple Language'
     },
-    {
+    'rdf':{
         'name': 'rdf',
         'display_name': 'fichero rdf',
         'image_display_url': None,
-        'description': 'Descripción rdf'
+        'description': 'Resource Description Framework, RDF'
     },
-    {
+    'xml':{
         'name': 'xml',
         'display_name': 'fichero xml',
         'image_display_url': None,
-        'description': 'Descripción xml'
+        'description': 'Extended Markup Language'
     },
-    {
+    'n3':{
         'name': 'n3',
         'display_name': 'fichero n3',
         'image_display_url': None,
-        'description': '''Notation3 o N3, como se conoce más comúnmente,
-         es una forma abreviada de serialización no-XML de modelos en RDF, 
-         diseñado pensando en la legibilidad por parte de humanos: N3 es 
-         mucho más compacto y fácil de leer que la notación RDF/XML.'''
+        'description': '''Notation3'''
     },
-    {
+    'jsonld':{
         'name': 'jsonld',
         'display_name': 'fichero jsonld',
         'image_display_url': None,
-        'description': 'Descripción jsonld'
+        'description': 'JavaScript Object Notation for Linked Data'
     },
-]
+}

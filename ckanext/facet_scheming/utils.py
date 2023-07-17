@@ -1,5 +1,6 @@
 from ckan.common import config
 import ckan.logic as logic
+from ckanext.facet_scheming.config import data_links
 import logging
 import os
 import hashlib
@@ -91,14 +92,14 @@ def public_dir_exists(path):
     return False
 
 def get_linked_data():
-    data_links=[]
+    data=[]
     for name in CONTENT_TYPES:
-        data_links.append({
+        data.append({
             'name': name,
-            'display_name': CONTENT_TYPES[name],
-            'image_display_url': None,
-            'description': 'Tipo '+CONTENT_TYPES[name]
+            'display_name': data_links.get(name,{}).get('display_name',CONTENT_TYPES[name]),
+            'image_display_url': data_links.get(name,{}).get('image_display_url',None),
+            'description': data_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name])
         })
 
-    return data_links
+    return data
         
