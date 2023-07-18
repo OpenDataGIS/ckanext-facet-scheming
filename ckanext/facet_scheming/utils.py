@@ -1,6 +1,6 @@
 from ckan.common import config
 import ckan.logic as logic
-from ckanext.facet_scheming.config import data_links
+from ckanext.facet_scheming.config import data_links, inspire_link, inspire_formats
 import logging
 import os
 import hashlib
@@ -102,4 +102,18 @@ def get_linked_data():
         })
 
     return data
+
+def get_inspire():
+    data=[]
+    for item in inspire_formats:
+        data.append({
+            'name': item['name'],
+            'display_name': item['display_name'],
+            'image_display_url': item['image_display_url'],
+            'description': item['description'],
+            'url':inspire_link.format(schema=item['outputSchema'],id='{id}')
+        })
+
+    return data
+        
         
