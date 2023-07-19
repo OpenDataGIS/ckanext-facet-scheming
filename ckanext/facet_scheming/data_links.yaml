@@ -1,0 +1,25 @@
+ttl:
+  display_name: Fichero ttl
+  image_display_url: 
+  description: Terse RDF Triple Language
+
+rdf:
+  display_name: Fichero rdf
+  image_display_url: 
+  description: Resource Description Framework, RDF
+
+xml:
+  display_name: Fichero xml
+  image_display_url: 
+  description: Extended Markup Language
+
+n3:
+  display_name: Fichero n3
+  image_display_url: 
+  description: Notation3
+
+jsonld:
+  display_name: Fichero jsonld
+  image_display_url: 
+  description: JavaScript Object Notation for Linked Data
+ 
