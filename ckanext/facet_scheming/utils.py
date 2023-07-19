@@ -116,7 +116,7 @@ def get_linked_data(id):
     if fs_config.debug:
         data_links = _load_yaml('data_links.yaml')
     else:
-        data_links=fs_config.data_links
+        data_links = fs_config.data_links
 
     data=[]
     for name in CONTENT_TYPES:
@@ -137,7 +137,7 @@ def get_inspire():
     if fs_config.debug:
         inspire_links = _load_yaml('inspire_links.yaml')
     else:
-        inspire_links=fs_config.inspire_links
+        inspire_links = fs_config.inspire_links
     data=[]
     for item in inspire_links.get('inspire_formats',{}):
         data.append({
