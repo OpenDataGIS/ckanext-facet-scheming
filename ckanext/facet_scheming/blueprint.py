@@ -33,10 +33,10 @@ def index(id):
     except (logic.NotFound, logic.NotAuthorized):
         return base.abort(404, _(u'Dataset {dataset} not found').format({dataset:id}))
 
-    return render('facet_scheming/linked_data/index.html',extra_vars={
+    return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,
-            u'id': id,
-            u'data_links': get_linked_data(),
+            u'endpoint': 'dcat.read_dataset',
+            u'data_list': get_linked_data(id),
         })
 
 @fscheming.route(u'/dataset/inspire/<id>')

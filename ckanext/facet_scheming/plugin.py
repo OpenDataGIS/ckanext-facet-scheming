@@ -6,6 +6,7 @@ import ckanext.facet_scheming.validators as validators
 import ckanext.facet_scheming.config as fs_config
 from ckanext.scheming.plugins import SchemingDatasetsPlugin, SchemingGroupsPlugin, SchemingOrganizationsPlugin
 from ckanext.facet_scheming.faceted import Faceted
+from ckanext.facet_scheming.utils import init_config
 from ckanext.facet_scheming import blueprint
 from ckanext.facet_scheming.package_controller import PackageController
 from ckan.lib.plugins import DefaultTranslation
@@ -65,12 +66,22 @@ class FacetSchemingPlugin(plugins.SingletonPlugin,
                         fs_config.group_custom_facets
                         )
             )
+        
+        fs_config.debug = toolkit.asbool(
+            config_.get('debug',
+                        fs_config.debug
+                        )
+            )
+        
+        #Load yamls config files, if not in debug mode
+        if not fs_config.debug:
+            init_config()
 
+        #configure Faceted class (parent of this)
         self.facet_load_config(config_.get(
             'facet_scheming.facet_list',
             '').split())
         
-        #Aprovecho python para hacer cosas que harian vomitar a una cabra programadora...
         
     def get_helpers(self):
         respuesta = dict(helpers.all_helpers)

@@ -15,9 +15,11 @@ Example:
       {% endfor %}
     </ul>
 #}
-{#% set url = h.url_for('dcat.read_dataset', _id=id, _format=data_link.name) %#}
-{#% set url = h.url_is_local(custom_data.url.format(id=id)) %#}
-{% set url = custom_data.url.format(id=id) %}
+{% if endpoint %}
+  {% set url = h.url_for(endpoint, **custom_data.endpoint_data) %}
+{% else %}
+  {% set url = custom_data.url.format(id=id) %}
+{% endif %}
 
 {% block item %}
 <li class="media-item">

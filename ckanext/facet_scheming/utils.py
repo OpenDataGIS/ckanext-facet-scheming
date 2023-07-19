@@ -1,11 +1,14 @@
 from ckan.common import config
 import ckan.logic as logic
-from ckanext.facet_scheming.config import data_links, inspire_link, inspire_formats
+from ckanext.facet_scheming import config as fs_config
 import logging
 import os
 import hashlib
 from threading import Lock
 from ckanext.dcat.utils import CONTENT_TYPES
+import yaml
+from yaml.loader import SafeLoader
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -91,27 +94,58 @@ def public_dir_exists(path):
 
     return False
 
-def get_linked_data():
+def init_config():
+    fs_config.data_links = _load_yaml('data_links.yaml')
+    fs_config.inspire_links = _load_yaml('inspire_links.yaml')
+
+def _load_yaml(file):
+    source_path = Path(__file__).resolve(True)
+    respuesta = None
+    try:
+        p = os.path.join(source_path.parent, file)
+        with open(p,'r') as f:
+            respuesta=yaml.load(f, Loader=SafeLoader )
+    except FileNotFoundError:
+        logger.error("El fichero {0} no existe".format(file))
+    except Exception as e:
+        logger.error("No ha sido posible leer la configuración de {0}: ".format(e))
+    return respuesta
+
+
+def get_linked_data(id):
+    if fs_config.debug:
+        data_links = _load_yaml('data_links.yaml')
+    else:
+        data_links=fs_config.data_links
+
     data=[]
     for name in CONTENT_TYPES:
         data.append({
             'name': name,
             'display_name': data_links.get(name,{}).get('display_name',CONTENT_TYPES[name]),
             'image_display_url': data_links.get(name,{}).get('image_display_url',None),
-            'description': data_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name])
+            'description': data_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name]),
+            'endpoint_data':{
+                '_id': id,
+                '_format': name,
+                }
         })
 
     return data
 
 def get_inspire():
+    if fs_config.debug:
+        inspire_links = _load_yaml('inspire_links.yaml')
+    else:
+        inspire_links=fs_config.inspire_links
     data=[]
-    for item in inspire_formats:
+    for item in inspire_links.get('inspire_formats',{}):
         data.append({
             'name': item['name'],
             'display_name': item['display_name'],
             'image_display_url': item['image_display_url'],
             'description': item['description'],
-            'url':inspire_link.format(schema=item['outputSchema'],id='{id}')
+            'url': inspire_links['inspire_link'].format(schema=item['outputSchema'],id='{id}')
         })
 
     return data
