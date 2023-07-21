@@ -100,15 +100,15 @@ def init_config():
 
 def _load_yaml(file):
     source_path = Path(__file__).resolve(True)
-    respuesta = None
+    respuesta = {}
     try:
-        p = os.path.join(source_path.parent, file)
+        p = source_path.parent.joinpath('custom_config',file)
         with open(p,'r') as f:
             respuesta=yaml.load(f, Loader=SafeLoader )
     except FileNotFoundError:
         logger.error("El fichero {0} no existe".format(file))
     except Exception as e:
-        logger.error("No ha sido posible leer la configuración de {0}: ".format(e))
+        logger.error("No ha sido posible leer la configuración de {0}: {1}".format(file, e))
     return respuesta
 
 
