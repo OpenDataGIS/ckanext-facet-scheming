@@ -767,10 +767,33 @@ dataset_fields:
       es: Autoridad local
     value: http://purl.org/adms/publishertype/LocalAuthority
   - label:
+      en: Academia-Scientific organisation
+      es: Organización académica-científica
+    value: http://purl.org/adms/publishertype/Academia-ScientificOrganisation
+  - label:
       en: Non profit organisation
       es: Organización sin animo de lucro
     value: http://purl.org/adms/publishertype/NonProfitOrganisation
-
+  - label:
+      en: Company
+      es: Empresa
+    value: http://purl.org/adms/publishertype/Company
+  - label:
+      en: Industry consortium
+      es: Consorcio industrial
+    value: http://purl.org/adms/publishertype/IndustryConsortium
+  - label:
+      en: Non Governmental Organisation
+      es: Organización no gubernamental (ONG)
+    value: http://purl.org/adms/publishertype/NonGovernmentalOrganisation
+  - label:
+      en: Private individual(s)
+      es: Individuo(s) privado(s)
+    value: http://purl.org/adms/publishertype/PrivateIndividual(s)
+  - label:
+      en: Standardisation body
+      es: Organismo de normalización
+    value: http://purl.org/adms/publishertype/StandardisationBody
 
 # Maintainer name (O)
 - field_name: maintainer
