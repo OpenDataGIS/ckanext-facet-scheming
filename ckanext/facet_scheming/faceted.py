@@ -4,7 +4,7 @@ import ckanext.facet_scheming.config as facet_scheming_config
 from ckanext.facet_scheming.utils import get_facets_dict
 import logging
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class Faceted():
@@ -14,7 +14,7 @@ class Faceted():
 
     def facet_load_config(self, facet_list):
         self.facet_list = facet_list
-        logger.debug("Configured facet_list= {0}".format(self.facet_list))
+        #log.debug("Configured facet_list= {0}".format(self.facet_list))
 
 #    Remove group facet
     def _facets(self, facets_dict):
@@ -55,7 +55,7 @@ class Faceted():
                     if raw_label:
                         _facets_dict[facet] = plugins.toolkit._(raw_label)
                     else:
-                        logger.warning(
+                        log.warning(
                             "Ha sido imposible encontrar una etiqueta "
                             "válida para el campo '{0}' al facetar".format(facet))
 
@@ -68,7 +68,7 @@ class Faceted():
 #        tag_key = 'tags_' + lang_code
 #        facets_dict[tag_key] = plugins.toolkit._('Tag')
 #         FIXME: PARA FACETA COMUN DE TAGS
-        logger.debug("dataset_facets._facets_dict: {0}".format(_facets_dict))
+        #log.debug("dataset_facets._facets_dict: {0}".format(_facets_dict))
         return _facets_dict
 
     def group_facets(self,
@@ -77,7 +77,7 @@ class Faceted():
                      package_type):
 
         if facet_scheming_config.group_custom_facets:
-            logger.debug("facetas personalizadas para grupo")
+            #log.debug("Facetas personalizadas para grupo")
             facets_dict = self._custom_facets(facets_dict, package_type)
         return facets_dict
 
@@ -87,10 +87,10 @@ class Faceted():
                             package_type):
 
         if facet_scheming_config.group_custom_facets:
-            logger.debug("facetas personalizadas para organización")
+            #log.debug("facetas personalizadas para organización")
             facets_dict = self._custom_facets(facets_dict, package_type)
         else:
-            logger.debug("facetas por defecto para organización")
+            log.debug("facetas por defecto para organización")
 
 #        lang_code = pylons.request.environ['CKAN_LANG']
 #        facets_dict.clear()

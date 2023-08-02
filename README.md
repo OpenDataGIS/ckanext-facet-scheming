@@ -6,11 +6,11 @@
 
 Particulary:
 - The search functionality in CKAN for custom schemas. It uses the fields defined in a scheming file to provide a set of tools to use these fields for scheming, and a way to include icons in their labels when displaying them.
-- Could use the schemas for `ckanext-scheming` in the plugin like [CKAN GeoDCAT-AP schema](ckanext/facet_scheming/scheming_schemas/ckan_geodcatap.yaml)
-- Add Metadata downloads for Linked Open Data (`ckanext-dcat`) and Geospatial Metadata (ISO 19139, Dublin Core, etc.)
+- Could use the schemas for `ckanext-scheming` in the plugin like [CKAN GeoDCAT-AP schema](ckanext/facet_scheming/schemas/geodcatap/ckan_geodcatap.yaml)
+- Add Metadata downloads for Linked Open Data ([`mjanez/ckanext-dcat`](https://github.com/mjanez/ckanext-dcat)) and Geospatial Metadata (ISO 19139, Dublin Core, etc. with [`mjanez/ckan-pycsw`](https://github.com/mjanez/ckanext-pycsw))
 
 >**Note**:<br>
-> Use a [custom schema](ckanext/facet_scheming/scheming_schemas/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541) for the spanish context ([NTI-RISP](https://datos.gob.es/en/documentacion/guia-de-aplicacion-de-la-norma-tecnica-de-interoperabilidad-de-reutilizacion-de)).
+> Use a [custom schema](ckanext/facet_scheming/schemas/geodcatap/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541) for the spanish context ([NTI-RISP](https://datos.gob.es/en/documentacion/guia-de-aplicacion-de-la-norma-tecnica-de-interoperabilidad-de-reutilizacion-de)).
 
 
 
@@ -19,10 +19,6 @@ Particulary:
 
 
 ## Requirements
-
->**Warning**<br>
-> This extension needs [custom GeoDCAT-AP ckanext-scheming](https://github.com/mjanez/ckanext-scheming) extension to work.
-
 `facet_scheming` is designed to provide templates and functions to be used by other extensions over it. It uses the fields defined in a scheming file to provide
  a set of tools to use those fields for scheming, and a way to include icons in its labels when displaying them.
 
@@ -114,10 +110,10 @@ To install ckanext-facet_scheming:
 To use the custom GeoDCAT-AP schema in `ckanext-scheming`:
 
   ```ini
-  scheming.dataset_schemas = ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
-  scheming.group_schemas = ckanext.facet_scheming:scheming_schemas/ckan_group_geodcatap.json
-  scheming.organization_schemas = ckanext.facet_scheming:scheming_schemas/ckan_org_geodcatap.json
-  scheming.presets = ckanext.facet_scheming:scheming_schemas/presets.json
+  scheming.dataset_schemas = ckanext.facet_scheming:schemas/geodcatap/ckan_geodcatap.yaml
+  scheming.group_schemas = ckanext.facet_scheming:schemas/geodcatap/ckan_group_geodcatap.json
+  scheming.organization_schemas = ckanext.facet_scheming:schemas/geodcatap/ckan_org_geodcatap.json
+  scheming.presets = ckanext.facet_scheming:schemas/geodcatap/presets.json
   ```
 
 There are not mandatory sets in the config file for this extension. You can use the following sets:

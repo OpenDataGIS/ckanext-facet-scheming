@@ -13,7 +13,7 @@ from ckan.lib.plugins import DefaultTranslation
 
 import logging
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class FacetSchemingPlugin(plugins.SingletonPlugin,
@@ -88,7 +88,7 @@ class FacetSchemingPlugin(plugins.SingletonPlugin,
         return respuesta
     
     def get_validators(self):
-        logger.debug("Validadores: {0}".format(dict(validators.all_validators)))
+        log.debug("Validadores: {0}".format(dict(validators.all_validators)))
         return dict(validators.all_validators)
 
     #IBlueprint

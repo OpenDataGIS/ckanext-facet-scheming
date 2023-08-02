@@ -13,7 +13,7 @@ from ckanext.facet_scheming.utils import (get_facets_dict, public_file_exists,
 
 import logging
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 all_helpers = {}
 
@@ -58,11 +58,11 @@ def fscheming_organization_name(id):
         if org_dic is not None:
             respuesta = org_dic['name']
         else:
-            logger.warning(
+            log.warning(
                 'No se ha podido encontrar el nombre de '
                 'la organización con id {0}'.format(id['display_name']))
     except Exception as e:
-        logger.error(
+        log.error(
             "Excepción al intentar encontrar el "
             "nombre de la organización: {0}".format(e))
     return respuesta
@@ -100,7 +100,7 @@ def fscheming_get_facet_items_dict(
 
     '''
 
-    logger.debug("Returning facets for: {0}".format(facet))
+    #log.debug("Returning facets for: {0}".format(facet))
 
     order = "default"
     items = []
@@ -129,7 +129,7 @@ def fscheming_get_facet_items_dict(
             elif not exclude_active:
                 items.append(dict(active=True, **facet_item))
 
-            #    logger.debug("params: {0}:{1}".format(
+            #    log.debug("params: {0}:{1}".format(
             #    facet,request.params.getlist("_%s_sort" % facet)))
             order_lst = request.params.getlist("_%s_sort" % facet)
             if len(order_lst):
@@ -227,7 +227,7 @@ def fscheming_get_icons_dir(field):
             dir = fs_config.icons_dir + '/' + field['field_name']
             if public_dir_exists(dir):
                 return dir
-        logger.debug("No hay directorio para {0}".format(field['field_name']))
+        log.debug("No hay directorio para {0}".format(field['field_name']))
     return None
 
 
@@ -252,7 +252,7 @@ def fscheming_get_icon(choice, dir=None):
 
     extensiones = ['.svg', '.png', '.jpg', '.gif']
     nombre = None
-#    logger.debug("Busco icono para {0}".format(choice.value))
+#    log.debug("Busco icono para {0}".format(choice.value))
 
     if choice:
         if 'icon' in choice:
@@ -284,7 +284,7 @@ def fscheming_get_choice_dic(field, value):
     :returns: The whole option item in scheming
     """
     if field and ('choices' in field):
-        #    logger.debug("Busco {0} en {1}".format(value,field['choices']))
+        #    log.debug("Busco {0} en {1}".format(value,field['choices']))
         for choice in field['choices']:
             if choice['value'] == value:
                 return choice

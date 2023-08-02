@@ -3,7 +3,7 @@ import ckan.model as model
 import ckan.lib.base as base
 import ckan.logic as logic
 from flask import Blueprint
-from ckanext.facet_scheming.utils import get_linked_data, get_inspire
+from ckanext.facet_scheming.utils import get_linked_data, get_geospatial_metadata
 
 from ckan.plugins.toolkit import render, g
 
@@ -39,8 +39,8 @@ def index(id):
             u'data_list': get_linked_data(id),
         })
 
-@fscheming.route(u'/dataset/inspire/<id>')
-def inspire(id):
+@fscheming.route(u'/dataset/geospatial_metadata/<id>')
+def geospatial_metadata(id):
     context = {
         u'model': model,
         u'session': model.Session,
@@ -60,5 +60,5 @@ def inspire(id):
     return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,
             u'id': id,
-            u'data_list': get_inspire(),
+            u'data_list': get_geospatial_metadata(),
         })

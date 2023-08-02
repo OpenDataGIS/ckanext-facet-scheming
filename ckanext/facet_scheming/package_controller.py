@@ -104,7 +104,7 @@ class PackageController():
                         request.params and \
                         request.params.items():
 
-                    log.debug('request.params %r' % request.params)
+                    #log.debug('request.params %r' % request.params)
                     if (FACET_OPERATOR_PARAM_NAME, 'AND') in request.params.items():
                         facet_operator = 'AND'
                     elif (FACET_OPERATOR_PARAM_NAME, 'OR') in request.params.items():
@@ -114,7 +114,7 @@ class PackageController():
                 log.warn("[_facet_search_operator]exception:%r: " % e)
                 facet_operator = self.default_facet_operator
 
-            log.debug(u'facet_operator {0}'.format(facet_operator))
+            #log.debug(u'facet_operator {0}'.format(facet_operator))
 
 # Por defecto la búsqueda por facetas es por intersección, pero si he pedido el
 # operador OR, la hago aditiva
@@ -125,7 +125,7 @@ class PackageController():
                 first_facet = True
                 first_no_facet = True
                 if facet_field is not None and len(facet_field) > 0:
-                    log.debug(u'facet_field {0}'.format(facet_field))
+                    #log.debug(u'facet_field {0}'.format(facet_field))
                     for fq_s in fq_split:
                         faceted = False
                         for facet in facet_field:
@@ -144,7 +144,7 @@ class PackageController():
                             else:
                                 no_facets_group = ('%s" AND %s' %
                                                    (no_facets_group, fq_s))
-# y aquí viene el salto final
+            # y aquí viene el salto final
                     if faceted:
                         if not first_no_facet:
                             no_facets_group = '%s"' % no_facets_group
@@ -153,13 +153,13 @@ class PackageController():
 
                     new_fq = '%s %s' % (facets_group, no_facets_group)
 
-                    log.debug(u'temp2 new_fq {0}'.format(new_fq))
-#                    log.info('#### fq = %s' % fq)
-#                    log.info('#### new_fq = %s' % new_fq)
+                    #log.debug(u'temp2 new_fq {0}'.format(new_fq))
+                    #log.info('#### fq = %s' % fq)
+                    #log.info('#### new_fq = %s' % new_fq)
         except UnicodeEncodeError as e:
             log.warn('UnicodeDecodeError %s  %s' % (e.errno, e.strerror))
         except Exception:
             log.warn("Unexpected error:%r: " % sys.exc_info()[0])
             new_fq = fq
-        log.debug(u'new fq {0}'.format(new_fq))
+        #log.debug(u'new fq {0}'.format(new_fq))
         return new_fq

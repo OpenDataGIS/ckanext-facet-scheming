@@ -124,3 +124,41 @@ img.spatial_uri-icon {
   display: inline-block;
 }
 .scheming-icon-list-icon:hover { cursor:pointer }
+
+/* scheming form-tabs titles */
+.stages {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  color: #aeaeae;
+  counter-reset: stage;
+  overflow: hidden;
+  margin-bottom: 30px;
+  font-size: 0.85em;
+}
+
+/* format icons */
+.img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  max-height: 100px;
+}
+
+.media-item {
+  position: relative;
+  width: 140px;
+  padding: 10px;
+  margin: 0 0 10px 10px;
+  background-color: white;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.media-description-url-overlay-link {
+  color: blue;
+  text-decoration: none;
+  font-size: 12px;
+  position: relative;
+  justify-content: left;
+}

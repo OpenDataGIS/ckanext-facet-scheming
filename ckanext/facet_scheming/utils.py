@@ -10,7 +10,7 @@ import yaml
 from yaml.loader import SafeLoader
 from pathlib import Path
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 # No configuro estas variables al principio del todo porque no sé si luego la
 # aplicación cargará otras extensiones con información que pueda necesitar.
@@ -66,14 +66,14 @@ def get_public_dirs():
 
 
 def public_file_exists(path):
-    #    logger.debug("Compruebo si existe {0}".format(path))
+    #    log.debug("Compruebo si existe {0}".format(path))
     file_hash = hashlib.sha512(path.encode('utf-8')).hexdigest()
 
     if file_hash in _files_hash:
         return True
 
     for dir in get_public_dirs():
-        #  logger.debug("Buscando en {0}".format(os.path.join(dir,path)))
+        #  log.debug("Buscando en {0}".format(os.path.join(dir,path)))
         if os.path.isfile(os.path.join(dir, path)):
             _files_hash.append(file_hash)
             return True
@@ -106,9 +106,9 @@ def _load_yaml(file):
         with open(p,'r') as f:
             respuesta=yaml.load(f, Loader=SafeLoader )
     except FileNotFoundError:
-        logger.error("El fichero {0} no existe".format(file))
+        log.error("El fichero {0} no existe".format(file))
     except Exception as e:
-        logger.error("No ha sido posible leer la configuración de {0}: {1}".format(file, e))
+        log.error("No ha sido posible leer la configuración de {0}: {1}".format(file, e))
     return respuesta
 
 
@@ -123,8 +123,9 @@ def get_linked_data(id):
         data.append({
             'name': name,
             'display_name': linkeddata_links.get(name,{}).get('display_name',CONTENT_TYPES[name]),
-            'image_display_url': linkeddata_links.get(name,{}).get('image_display_url',None),
-            'description': linkeddata_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name]),
+            'image_display_url': linkeddata_links.get(name,{}).get('image_display_url', None),
+            'description': linkeddata_links.get(name,{}).get('description','Tipos '+ CONTENT_TYPES[name]),
+            'description_url': linkeddata_links.get(name,{}).get('description_url', None),
             'endpoint_data':{
                 '_id': id,
                 '_format': name,
@@ -133,21 +134,20 @@ def get_linked_data(id):
 
     return data
 
-def get_inspire():
+def get_geospatial_metadata():
     if fs_config.debug:
         geometadata_links = _load_yaml('geometadata_links.yaml')
     else:
         geometadata_links = fs_config.geometadata_links
     data=[]
-    for item in geometadata_links.get('inspire_formats',{}):
+    for item in geometadata_links.get('csw_formats',{}):
         data.append({
             'name': item['name'],
             'display_name': item['display_name'],
             'image_display_url': item['image_display_url'],
             'description': item['description'],
-            'url': geometadata_links['inspire_link'].format(schema=item['outputSchema'],id='{id}')
+            'description_url': item['description_url'],
+            'url': geometadata_links['csw_url'].format(schema=item['outputSchema'],id='{id}')
         })
 
     return data
-        
-        

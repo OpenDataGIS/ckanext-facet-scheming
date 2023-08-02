@@ -155,35 +155,46 @@ msgstr ""
 msgid "Maintainer"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:51
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_list.html:51
 msgid "ordenar por nombre"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:58
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_list.html:58
 msgid "ordenar por resultados"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:111
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_list.html:111
 msgid "Mostrar Más {facet_type}"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:114
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_list.html:114
 msgid "Mostrar solo los primeros {facet_type}"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_list.html:118
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_list.html:118
 msgid "No existen {facet_type} que coincidan con la búsqueda"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_search_operator.html:53
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_search_operator.html:53
 msgid "Criterios de selección"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_search_operator.html:56
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_search_operator.html:56
 msgid "Alguno"
 msgstr ""
 
-#: ckanext/facet_scheming/templates/snippets/fscheming_facet_search_operator.html:57
+#: ckanext/facet_scheming/templates/snippets/schemingdct_facet_search_operator.html:57
 msgid "Todos"
 msgstr ""
 
+#: ckanext/facet_scheming/templates/package/read_base.html:4
+msgid "Linked Data"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/package/read_base.html:5
+msgid "Geospatial Metadata"
+msgstr ""
+
+#: ckanext/facet_scheming/templates/facet_scheming/custom_data/snippets/custom_data_item.html:35
+msgid "Format definition"
+msgstr ""
