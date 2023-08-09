@@ -13,6 +13,10 @@
 
 `facet_scheming` is designed to provide templates and functions to be used by other extensions over it. It uses the fields defined in a scheming file to provide
  a set of tools to use those fields for scheming, and a way to include icons in its labels when displaying them.
+ 
+ This aplications needs ckanext-scheming (3.0.0) installed in the python enviroment but not in the ckan config file to work. It makes use of ckanext-scheming code, but
+ that has to be not installed in ckan. This means you must download ckanext-scheming and install it in  the ckan enviroment (pip install), but don't add it to
+ ckan.plugins in the configuration .ini file. 
 
 Compatibility with core CKAN versions:
 
@@ -21,6 +25,14 @@ Compatibility with core CKAN versions:
 | 2.8 and earlier | not tested    |
 | 2.9             | yes           |
 | 2.10            | not yet       |
+
+Compatibility with ckanex-scheming versions:
+
+| CKAN version    | Compatible?   |
+| --------------- | ------------- |
+| pre 3.0.0       | not tested    |
+| 3.0.0           | yes           |
+
 
 Suggested values:
 
@@ -34,11 +46,14 @@ Suggested values:
 
 To install ckanext-facet_scheming:
 
+
 1. Activate your CKAN virtual environment, for example:
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Clone the source and install it on the virtualenv
+2. Install ckanext-scheming in the enviroment (pip install), but not in the ckan config file.
+
+3. Clone the source and install it on the virtualenv
 
     ```bash 
     git clone https://github.com/dsanjurj/ckanext-facet_scheming.git
@@ -47,15 +62,29 @@ To install ckanext-facet_scheming:
     pip install -r requirements.txt
     ```
 
-3. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
+4. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
+   
+5. Remember to point the schemas files in the config file. If you keep them into the proposed directories, the ckan config files mus be like:
 
-4. Clear the index in solr:
+   '''ini
+   scheming.dataset_schemas =  ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
+   scheming.group_schemas = ckanext.facet_scheming:scheming_schemas/ckan_group_geodcatap.json
+   scheming.organization_schemas = ckanext.facet_scheming:scheming_schemas/ckan_org_geodcatap.json
+   scheming.presets = ckanext.facet_scheming:scheming_schemas/presets.json
+
+   scheming.dataset_fallback = false
+   '''
+   
+   Look at "Config (.ini) file" section for more details to configure the extension.
+
+
+6. Clear the index in solr:
 
 	`ckan -c [route to your .ini ckan config file] search-index clear`
    
-5. Modify the schema file on Solr (schema or managed schema) to add the multivalued fields added in the scheming extension used for faceting. You can add any field defined in the schema file used in the ckanext-scheming extension that you want to use for faceting.
+7. Modify the schema file on Solr (schema or managed schema) to add the multivalued fields added in the scheming extension used for faceting. You can add any field defined in the schema file used in the ckanext-scheming extension that you want to use for faceting.
    You must define each field with these parameters:
    - type: string - to avoid split the text in tokens, each individually "faceted".
    - uninvertible: false - as recomended by solr´s documentation 
@@ -85,11 +114,11 @@ To install ckanext-facet_scheming:
    	
 	Be sure to restart Solr after modify the schema.
 	
-6. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+8. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
      sudo service apache2 reload
      
-7. Reindex solr index:
+9. Reindex solr index:
 
 	`ckan -c [route to your .ini ckan config file] search-index rebuild`
 
@@ -191,6 +220,7 @@ The same custom fields for faceting can be used when browsing organizations and 
   ```
 
 This two last settings are not mandatory. You can omit one or both (or set them to 'false'), and the default fields for faceting will be used instead.
+Actually only group_custom_facets works, beeing organization_custom_facets management a TO-DO.
 
 ### Icons
 
