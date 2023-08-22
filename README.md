@@ -76,16 +76,20 @@ To install ckanext-facet_scheming:
 
    scheming.dataset_fallback = false
    '''
-   
+  
    Look at "Config (.ini) file" section for more details to configure the extension.
-
 
 6. Clear the index in solr:
 
 	`ckan -c [route to your .ini ckan config file] search-index clear`
    
-7. Modify the schema file on Solr (schema or managed schema) to add the multivalued fields added in the scheming extension used for faceting. You can add any field defined in the schema file used in the ckanext-scheming extension that you want to use for faceting.
+7. Modify the schema file on Solr (schema or managed schema) to add the 
+   multivalued fields added in the scheming extension used for faceting. 
+   You can add any field defined in the schema file used in the 
+   ckanext-scheming extension that you want to use for faceting.
+
    You must define each field with these parameters:
+
    - type: string - to avoid split the text in tokens, each individually "faceted".
    - uninvertible: false - as recomended by solr´s documentation 
    - docValues: true - to ease recovering faceted resources
@@ -93,8 +97,7 @@ To install ckanext-facet_scheming:
    - stored: true - to let the value to be recovered by queries
    - multiValued: well... it depends on if it is a multivalued field (several values for one resource) or a regular field (just one value). Use "true" or "false" respectively. 
    
-   By now iepnb extension are ready to use these multivalued fields. You have to add this configuration fragment to solr schema in order to use them:
-
+   By now facet_scheming extension are ready to use these multivalued fields. You have to add this configuration fragment to solr schema in order to use them:
 	
     ```xml
     <!-- IEPNB extra fields -->
@@ -109,22 +112,28 @@ To install ckanext-facet_scheming:
       <field name="resource_relation" type="string" uninvertible="false" docValues="true" indexed="true" stored="true" multiValued="true"/>
     ```
 
-    >**Note**<br>
-    >You can ommit any field you're not going to use for faceting, but the best policy could be to add all values at the beginning.
+
+   **Note**
+   You can ommit any field you're not going to use for faceting or search, but 
+   the best policy could be to add all values at the beginning.
    	
-	Be sure to restart Solr after modify the schema.
+   Be sure to restart Solr after modify the schema.
 	
 8. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
-     sudo service apache2 reload
+     `sudo service apache2 reload`
      
 9. Reindex solr index:
 
 	`ckan -c [route to your .ini ckan config file] search-index rebuild`
 
-	Sometimes solr can issue an error while reindexing. In that case I'd try to restart solr, delete index ("search-index clear"), restart solr, rebuild index, and restart solr again.
+   Sometimes solr can issue an error while reindexing. In that case I'd try to 
+   restart solr, delete index ("search-index clear"), restart solr, rebuild 
+   index, and restart solr again.
 	
-	Ckan needs to "fix" multivalued fields to be able to recover values correctly for faceting, so this step must be done in order to use faceting with multivalued fields. 
+   Ckan needs to "fix" multivalued fields to be able to recover values correctly
+   for faceting, so this step must be done in order to use faceting with 
+   multivalued fields. 
      
 ## Helpers
 
@@ -132,15 +141,21 @@ To install ckanext-facet_scheming:
 
 - **fscheming\_default\_facet\_search\_operator**(): Returns the default 
 facet search operator: AND/OR (string)
+
 - **fscheming\_decode\_json**( json\_text ): Converts a JSON formatted text
  in a python object using ckan.common.json
+
 - **fscheming\_organization\_name**( id ): Returns the name of the organization
  given its id. Returns None if not found
+
 - **fscheming\_get_facet\_label**( facet ): Returns the label of a facet as
  defined in the scheming file
+
 - **fscheming\_get\_facet\_items\_dict**( facet, search\_facets=None, limit=None,
- exclude\_active=False, scheming\_choices=None): Returns the list of unselected 
+ exclude\_active=False, scheming\_choices=None): Returns the list of unselected
+
  facet items (objects) for the given facet, sorted by the field indicated in the request.
+
         Arguments:
   - facet -- the name of the facet to filter.
   - search\_facets -- dict with search facets. Taken from c.search_facets if not
@@ -150,18 +165,22 @@ facet search operator: AND/OR (string)
   - exclude\_active -- only return unselected facets.
   - scheming\_choices -- scheming choices to use to get labels from values.
    If not provided takes `display\_name` field provided by Solr
+
 - **fscheming\_new\_order\_url**(name, concept): Returns a url with the order
  parameter for the given facet and concept to use.  
     Based in the actual order it rotates ciclically from
      \[no order\]->[direct order]->[inverse order] for the given concept \(name or count\)
+
 - **fscheming\_schema\_get\_icons\_dir**(field): Gets the icons' directory
  for the given field. It can be obtained (in order of preference) from the 
  _icons\_dir_ property for the given field in the scheming file, from the 
  _facet\_scheming.icons\_dir_ value  given in CKAN configuration file, plus
   the name of the field, or from the directory named after the field name 
   in `images/icons` dir.
+
 - **fscheming\_schema\_get\_default\_icon**(field): Gets the default 
  icon for the given field, defined in the schemig file, o `None` if not defined.
+
 - **fscheming\_schema\_icon**(choice, dir=None): Search for the icon path for 
  the especified choice beside the given dir (if any). If the scheming file include a _icon_ 
  setting for the choice, this is returned (beside the given _dir_).
@@ -170,6 +189,7 @@ facet search operator: AND/OR (string)
   It locates the file searching for svg, png, jpeg or gif extensions in all 
   the _public_ dirs of the ckan configured extensions. If the file could be 
   located, it returns the relative url. If not, it returns `None`.
+
 - **fscheming\_get\_choice\_dic**(field, value): Gets the choice item for the 
   given value in field of the scheming file. 
 

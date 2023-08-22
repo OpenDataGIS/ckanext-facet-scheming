@@ -1,6 +1,6 @@
 name: facet-scheming-test
 run-name: ${{ github.actor }} probando facet-scheming-test
-on: [workflow_dispatch]
+on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
