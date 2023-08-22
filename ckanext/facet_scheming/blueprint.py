@@ -32,7 +32,7 @@ def index(id):
         pkg_dict = get_action(u'package_show')(context, data_dict)
         pkg = context[u'package']
     except (logic.NotFound, logic.NotAuthorized):
-        return base.abort(404, _(u'Dataset {dataset} not found').format({dataset:id}))
+        return base.abort(404, _(u'Dataset {id=} not found').format())
 
     return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,
@@ -56,7 +56,7 @@ def inspire(id):
         pkg_dict = get_action(u'package_show')(context, data_dict)
         pkg = context[u'package']
     except (logic.NotFound, logic.NotAuthorized):
-        return base.abort(404, _(u'Dataset {dataset} not found').format({dataset:id}))
+        return base.abort(404, _(u'Dataset {id=} not found').format())
 
     return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,
