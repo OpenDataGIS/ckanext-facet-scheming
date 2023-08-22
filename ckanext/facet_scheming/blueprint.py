@@ -4,6 +4,7 @@ import ckan.lib.base as base
 import ckan.logic as logic
 from flask import Blueprint
 from ckanext.facet_scheming.utils import get_linked_data, get_inspire
+from ckantoolkit import _
 
 from ckan.plugins.toolkit import render, g
 
