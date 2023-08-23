@@ -45,28 +45,28 @@ jobs:
       CKAN_REDIS_URL: redis://redis:6379/1
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-#    - uses: actions/checkout@v3
-#      with:
-#        repository: mjanez/ckanext-scheming
-    - name: Install requirements
-      run: |
-        # pwd
-        echo $GITHUB_WORKSPACE
-        # ls -al $GITHUB_WORKSPACE
-        pip install --upgrade pip
-        pip install -r test-requirements.txt
-        pip install -e .
-        # Replace default path to CKAN core config file with the one on the container
-        sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
-        # sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test_subclass.ini
-    - name: Setup extension
-      run: |
-        ckan -c test.ini db init
-    - name: Run all tests
-      run: pytest --ckan-ini=test.ini --cov=ckanext.scheming ckanext/scheming/tests
-    #- name: Run plugin subclassing tests
-    #  run: pytest --ckan-ini=test_subclass.ini ckanext/scheming/tests/test_dataset_display.py ckanext/scheming/tests/test_form.py::TestDatasetFormNew ckanext/scheming/tests/test_dataset_logic.py
+        - uses: actions/checkout@v3
+        - uses: actions/setup-python@v4
+            with:
+              python-version: 3.9
+    #    - uses: actions/checkout@v3
+    #      with:
+    #        repository: mjanez/ckanext-scheming
+        - name: Install requirements
+          run: |
+            # pwd
+            echo $GITHUB_WORKSPACE
+            # ls -al $GITHUB_WORKSPACE
+            pip install --upgrade pip
+            pip install -r test-requirements.txt
+            pip install -e .
+            # Replace default path to CKAN core config file with the one on the container
+            sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+            # sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test_subclass.ini
+        - name: Setup extension
+          run: |
+            ckan -c test.ini db init
+        - name: Run all tests
+          run: pytest --ckan-ini=test.ini --cov=ckanext.scheming ckanext/scheming/tests
+        #- name: Run plugin subclassing tests
+        #  run: pytest --ckan-ini=test_subclass.ini ckanext/scheming/tests/test_dataset_display.py ckanext/scheming/tests/test_form.py::TestDatasetFormNew ckanext/scheming/tests/test_dataset_logic.py
