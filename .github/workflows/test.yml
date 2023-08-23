@@ -45,9 +45,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/checkout@v3
-      with:
-        repository: mjanez/ckanext-scheming
+#    - uses: actions/checkout@v3
+#      with:
+#        repository: mjanez/ckanext-scheming
     - name: Install requirements
       run: |
         pwd
