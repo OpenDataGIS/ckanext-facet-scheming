@@ -1,3 +1,38 @@
-git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
-git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
+ckanext-scheming @ git+https://github.com/ckan/ckanext-scheming.git
+ckanext-dcat @ git+https://github.com/ckan/ckanext-dcat.git
+
+    # via requests
+charset-normalizer==3.2.0
+    # via requests
+ckanapi==4.7
+    # via ckanext-scheming
+ckantoolkit==0.0.7
+    # via ckanext-scheming
+docopt==0.6.2
+    # via ckanapi
+idna==3.4
+    # via requests
+isodate==0.6.1
+    # via rdflib
+pyparsing==3.1.1
+    # via rdflib
+python-slugify==8.0.1
+    # via ckanapi
+pytz==2023.3
+    # via ckanext-scheming
+pyyaml==6.0.1
+    # via ckanext-scheming
 rdflib==6.1.1
+    # via -r test-requirements.txt
+requests==2.31.0
+    # via ckanapi
+six==1.16.0
+    # via
+    #   ckanapi
+    #   ckanext-scheming
+    #   ckantoolkit
+    #   isodate
+text-unidecode==1.3
+    # via python-slugify
+urllib3==2.0.4
+    # via requests
