@@ -58,8 +58,12 @@ jobs:
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
           pip install --upgrade pip
-          pip install -r test-requirements.txt
+          pip install -r requirements.txt
           pip install -e .
+          pip install -e ckanext-scheming @ git+https://github.com/ckan/ckanext-scheming.git
+          pip install -e ckanext-dcat @ git+https://github.com/ckan/ckanext-dcat.git
+
+          
           # Replace default path to CKAN core config file with the one on the container
           sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
           # sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test_subclass.ini
