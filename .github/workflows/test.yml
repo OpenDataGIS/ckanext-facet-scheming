@@ -61,10 +61,9 @@ jobs:
           pip install -r requirements.txt
           pip install -e .
           pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
-          pip install -r /srv/app/src/ckanext-scheming/requirements.txt
           pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
           pip install -r /srv/app/src/ckanext-dcat/requirements.txt
-          pip install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
+          pip install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
           pip install -r /srv/app/src/ckanext-harvest/requirements.txt
           
           # Replace default path to CKAN core config file with the one on the container
