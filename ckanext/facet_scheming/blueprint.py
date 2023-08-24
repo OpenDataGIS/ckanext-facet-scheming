@@ -4,6 +4,7 @@ import ckan.lib.base as base
 import ckan.logic as logic
 from flask import Blueprint
 from ckanext.facet_scheming.utils import get_linked_data, get_inspire
+from ckantoolkit import _
 
 from ckan.plugins.toolkit import render, g
 
@@ -31,7 +32,7 @@ def index(id):
         pkg_dict = get_action(u'package_show')(context, data_dict)
         pkg = context[u'package']
     except (logic.NotFound, logic.NotAuthorized):
-        return base.abort(404, _(u'Dataset {dataset} not found').format({dataset:id}))
+        return base.abort(404, _(u'Dataset {id=} not found').format())
 
     return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,
@@ -55,7 +56,7 @@ def inspire(id):
         pkg_dict = get_action(u'package_show')(context, data_dict)
         pkg = context[u'package']
     except (logic.NotFound, logic.NotAuthorized):
-        return base.abort(404, _(u'Dataset {dataset} not found').format({dataset:id}))
+        return base.abort(404, _(u'Dataset {id=} not found').format())
 
     return render('facet_scheming/custom_data/index.html',extra_vars={
             u'pkg_dict': pkg_dict,

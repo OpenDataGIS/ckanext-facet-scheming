@@ -1,6 +1,6 @@
 name: facet-scheming-test
 run-name: ${{ github.actor }} probando facet-scheming-test
-on: [workflow_dispatch]
+on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: 3.9
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Check syntax
@@ -16,19 +16,20 @@ jobs:
 
   test:
     needs: lint
-    strategy:
-      matrix:
-        ckan-version: ["2.10", 2.9]
-      fail-fast: false
-    name: CKAN ${{ matrix.ckan-version }}
+    #strategy:
+    #  matrix:
+    #    ckan-version: ["2.10", 2.9]
+    #  fail-fast: false
+    name: CKAN 2.9
     runs-on: ubuntu-latest
     container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+      image: openknowledge/ckan-dev:2.9
+      #${{ matrix.ckan-version }}
     services:
       solr:
-        image: ckan/ckan-solr:${{ matrix.ckan-version }}
+        image: ckan/ckan-solr:2.9
       postgres:
-        image: ckan/ckan-postgres-dev:${{ matrix.ckan-version }}
+        image: ckan/ckan-postgres-dev:2.9
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -44,25 +45,36 @@ jobs:
       CKAN_REDIS_URL: redis://redis:6379/1
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/checkout@v3
-      with:
-        repository: mjanez/ckanext-scheming
-    - name: Install requirements
-      run: |
-        pwd
-        echo $GITHUB_WORKSPACE
-        ls -al $GITHUB_WORKSPACE
-        pip install --upgrade pip
-        pip install -e .
-        # Replace default path to CKAN core config file with the one on the container
-        sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
-        sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test_subclass.ini
-    - name: Setup extension
-      run: |
-        pip install -r test-requirements.txt
-        ckan -c test.ini db init
-    - name: Run all tests
-      run: pytest --ckan-ini=test.ini --cov=ckanext.scheming ckanext/scheming/tests
-    - name: Run plugin subclassing tests
-      run: pytest --ckan-ini=test_subclass.ini ckanext/scheming/tests/test_dataset_display.py ckanext/scheming/tests/test_form.py::TestDatasetFormNew ckanext/scheming/tests/test_dataset_logic.py
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+    #    - uses: actions/checkout@v3
+    #      with:
+    #        repository: mjanez/ckanext-scheming
+      - name: Install requirements
+        run: |
+          # pwd
+          echo $GITHUB_WORKSPACE
+          # ls -al $GITHUB_WORKSPACE
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+          pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+          pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
+          pip install -r /srv/app/src/ckanext-dcat/requirements.txt
+          pip install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
+          pip install -r /srv/app/src/ckanext-harvest/requirements.txt
+          
+          # Replace default path to CKAN core config file with the one on the container
+          sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+          # sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test_subclass.ini
+      - name: Setup extension
+        run: |
+          ckan -c test.ini db init
+      - name: Run all tests
+        run: | 
+          pip install -r test-requirements.txt
+          pytest --ckan-ini=test.ini --cov=ckanext.facet_scheming ckanext/facet_scheming/tests
+      #- name: Run plugin subclassing tests
+      #  run: pytest --ckan-ini=test_subclass.ini ckanext/scheming/tests/test_dataset_display.py ckanext/scheming/tests/test_form.py::TestDatasetFormNew ckanext/scheming/tests/test_dataset_logic.py

@@ -1,8 +1,15 @@
 # ckanext-facet_scheming
->**Warning**:<br>
-> Requires [mjanez/ckanext-dcat](https://github.com/mjanez/ckanext-dcat) and [ckan/ckanext-spatial](https://github.com/ckan/ckanext-spatial) to work properly.
 
-`ckanext-facet_scheming` provides functions and templates specifically designed to extend `ckanext-scheming` and includes DCAT enhancements to adapt CKAN Schema to [GeoDCAT-AP](https://github.com/mjanez/ckanext-dcat/releases/tag/1.0.0-geodcatap).
+`ckanext-facet_scheming` provides functions and templates specifically designed to extend `ckanext-scheming` and includes DCAT enhancements to adapt CKAN Schema to [DCAT-AP](https://github.com/ckan/ckanext-dcat/).
+
+![image](https://user-images.githubusercontent.com/96422458/235639244-4c2fc026-efec-460c-9800-62d2b5668b4a.png)
+
+`facet_scheming` is designed to provide templates and functions to be used by other extensions over it. It uses the fields defined in a scheming file to provide
+ a set of tools to use those fields for scheming, and a way to include icons in its labels when displaying them.
+ 
+ This aplications needs ckanext-scheming (3.0.0) installed in the python enviroment but not in the ckan config file to work. It makes use of ckanext-scheming code, but
+ that has to be not installed in ckan. This means you must download ckanext-scheming and install it in  the ckan enviroment (pip install), but don't add it to
+ ckan.plugins in the configuration .ini file. 
 
 Particulary:
 - The search functionality in CKAN for custom schemas. It uses the fields defined in a scheming file to provide a set of tools to use these fields for scheming, and a way to include icons in their labels when displaying them.
@@ -12,27 +19,28 @@ Particulary:
 >**Note**:<br>
 > Use a [custom schema](ckanext/facet_scheming/scheming_schemas/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541) for the spanish context ([NTI-RISP](https://datos.gob.es/en/documentacion/guia-de-aplicacion-de-la-norma-tecnica-de-interoperabilidad-de-reutilizacion-de)).
 
-
-
-![image](https://user-images.githubusercontent.com/96422458/235639244-4c2fc026-efec-460c-9800-62d2b5668b4a.png)
-
-
-
 ## Requirements
-
 >**Warning**<br>
-> This extension needs [custom GeoDCAT-AP ckanext-scheming](https://github.com/mjanez/ckanext-scheming) extension to work.
+>
+> This extension needs [ckanext-scheming](https://github.com/ckan/ckanext-scheming.git), 
+[ckanext-dcat](https://github.com/ckan/ckanext-dcat.git) and 
+[ckanext-harvest](https://github.com/ckan/ckanext-harvest.git) extensions to work properly.
 
-`facet_scheming` is designed to provide templates and functions to be used by other extensions over it. It uses the fields defined in a scheming file to provide
- a set of tools to use those fields for scheming, and a way to include icons in its labels when displaying them.
-
-Compatibility with core CKAN versions:
+## Compatibility with core CKAN versions
 
 | CKAN version    | Compatible?   |
 | --------------- | ------------- |
 | 2.8 and earlier | not tested    |
 | 2.9             | yes           |
 | 2.10            | not yet       |
+
+Compatibility with ckanex-scheming versions:
+
+| CKAN version    | Compatible?   |
+| --------------- | ------------- |
+| pre 3.0.0       | not tested    |
+| 3.0.0           | yes           |
+
 
 Suggested values:
 
@@ -46,11 +54,14 @@ Suggested values:
 
 To install ckanext-facet_scheming:
 
+
 1. Activate your CKAN virtual environment, for example:
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Clone the source and install it on the virtualenv
+2. Install ckanext-scheming in the enviroment (pip install), but not in the ckan config file.
+
+3. Clone the source and install it on the virtualenv
 
     ```bash 
     git clone https://github.com/dsanjurj/ckanext-facet_scheming.git
@@ -59,16 +70,34 @@ To install ckanext-facet_scheming:
     pip install -r requirements.txt
     ```
 
-3. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
+4. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
+   
+5. Remember to point the schemas files in the config file. If you keep them into the proposed directories, the ckan config files mus be like:
 
-4. Clear the index in solr:
+   '''ini
+   scheming.dataset_schemas =  ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
+   scheming.group_schemas = ckanext.facet_scheming:scheming_schemas/ckan_group_geodcatap.json
+   scheming.organization_schemas = ckanext.facet_scheming:scheming_schemas/ckan_org_geodcatap.json
+   scheming.presets = ckanext.facet_scheming:scheming_schemas/presets.json
+
+   scheming.dataset_fallback = false
+   '''
+  
+   Look at "Config (.ini) file" section for more details to configure the extension.
+
+6. Clear the index in solr:
 
 	`ckan -c [route to your .ini ckan config file] search-index clear`
    
-5. Modify the schema file on Solr (schema or managed schema) to add the multivalued fields added in the scheming extension used for faceting. You can add any field defined in the schema file used in the ckanext-scheming extension that you want to use for faceting.
+7. Modify the schema file on Solr (schema or managed schema) to add the 
+   multivalued fields added in the scheming extension used for faceting. 
+   You can add any field defined in the schema file used in the 
+   ckanext-scheming extension that you want to use for faceting.
+
    You must define each field with these parameters:
+
    - type: string - to avoid split the text in tokens, each individually "faceted".
    - uninvertible: false - as recomended by solr´s documentation 
    - docValues: true - to ease recovering faceted resources
@@ -76,8 +105,7 @@ To install ckanext-facet_scheming:
    - stored: true - to let the value to be recovered by queries
    - multiValued: well... it depends on if it is a multivalued field (several values for one resource) or a regular field (just one value). Use "true" or "false" respectively. 
    
-   By now iepnb extension are ready to use these multivalued fields. You have to add this configuration fragment to solr schema in order to use them:
-
+   By now facet_scheming extension are ready to use these multivalued fields. You have to add this configuration fragment to solr schema in order to use them:
 	
     ```xml
     <!-- IEPNB extra fields -->
@@ -92,26 +120,111 @@ To install ckanext-facet_scheming:
       <field name="resource_relation" type="string" uninvertible="false" docValues="true" indexed="true" stored="true" multiValued="true"/>
     ```
 
-    >**Note**<br>
-    >You can ommit any field you're not going to use for faceting, but the best policy could be to add all values at the beginning.
-   	
-	Be sure to restart Solr after modify the schema.
-	
-6. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
-     sudo service apache2 reload
+   **Note**
+   You can ommit any field you're not going to use for faceting or search, but 
+   the best policy could be to add all values at the beginning.
+   	
+   Be sure to restart Solr after modify the schema.
+	
+8. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+
+     `sudo service apache2 reload`
      
-7. Reindex solr index:
+9. Reindex solr index:
 
 	`ckan -c [route to your .ini ckan config file] search-index rebuild`
 
-	Sometimes solr can issue an error while reindexing. In that case I'd try to restart solr, delete index ("search-index clear"), restart solr, rebuild index, and restart solr again.
+   Sometimes solr can issue an error while reindexing. In that case I'd try to 
+   restart solr, delete index ("search-index clear"), restart solr, rebuild 
+   index, and restart solr again.
+   
+   Ckan needs to "fix" multivalued fields to be able to recover values correctly
+   for faceting, so this step must be done in order to use faceting with 
+   multivalued fields. 
 	
-	Ckan needs to "fix" multivalued fields to be able to recover values correctly for faceting, so this step must be done in order to use faceting with multivalued fields. 
+## Helpers
+
+`facet_scheming` provides a set of useful helpers to be used in templates
+
+- **fscheming\_default\_facet\_search\_operator**(): Returns the default 
+facet search operator: AND/OR (string)
+
+- **fscheming\_decode\_json**( json\_text ): Converts a JSON formatted text
+ in a python object using ckan.common.json
+
+- **fscheming\_organization\_name**( id ): Returns the name of the organization
+ given its id. Returns None if not found
+
+- **fscheming\_get_facet\_label**( facet ): Returns the label of a facet as
+ defined in the scheming file
+
+- **fscheming\_get\_facet\_items\_dict**( facet, search\_facets=None, limit=None,
+ exclude\_active=False, scheming\_choices=None): Returns the list of unselected
+
+ facet items (objects) for the given facet, sorted by the field indicated in the request.
+
+        Arguments:
+  - facet -- the name of the facet to filter.
+  - search\_facets -- dict with search facets. Taken from c.search_facets if not
+   defined
+  - limit -- the max. number of facet items to return. Taken from 
+  c.search\_facets_limits if not defined
+  - exclude\_active -- only return unselected facets.
+  - scheming\_choices -- scheming choices to use to get labels from values.
+   If not provided takes `display\_name` field provided by Solr
+
+- **fscheming\_new\_order\_url**(name, concept): Returns a url with the order
+ parameter for the given facet and concept to use.  
+    Based in the actual order it rotates ciclically from
+     \[no order\]->[direct order]->[inverse order] for the given concept \(name or count\)
+
+- **fscheming\_schema\_get\_icons\_dir**(field): Gets the icons' directory
+ for the given field. It can be obtained (in order of preference) from the 
+ _icons\_dir_ property for the given field in the scheming file, from the 
+ _facet\_scheming.icons\_dir_ value  given in CKAN configuration file, plus
+  the name of the field, or from the directory named after the field name 
+  in `images/icons` dir.
+
+- **fscheming\_schema\_get\_default\_icon**(field): Gets the default 
+ icon for the given field, defined in the schemig file, o `None` if not defined.
+
+- **fscheming\_schema\_icon**(choice, dir=None): Search for the icon path for 
+ the especified choice beside the given dir (if any). If the scheming file include a _icon_ 
+ setting for the choice, this is returned (beside the given _dir_).
+  If not, it takes the last fragment of the value url for the icon name, and 
+  the next two fragments of the url as two steps from _dir_ to the icon file.  
+  It locates the file searching for svg, png, jpeg or gif extensions in all 
+  the _public_ dirs of the ckan configured extensions. If the file could be 
+  located, it returns the relative url. If not, it returns `None`.
+
+- **fscheming\_get\_choice\_dic**(field, value): Gets the choice item for the 
+  given value in field of the scheming file. 
+
+## Templates
+
+Also a set of useful templates and snippets are provided
+
+- **fscheming\_facet\_list.html** Extending ckan original facet list 
+snippet, provides a way to show facet labels instead of values (which is what 
+Solr provides), prepending an icon if provided. To call you must extend the template 
+`package/search.html`.
+
+- **fscheming\_facet_search\_operator** Gives the control to select the operator used to
+combine facets. 
+
+- **multiple\_choice\_icon** Display snippet to use instead the original _multiple\_choice_ snippet
+provided by the scheming extension. It adds an icon before the label of the value.
+
+- **select\_icon** Display snippet to use instead the original _select_ snippet
+provided by the scheming extension. It adds an icon before the label of the value.
+
+- **multiple\_select-icon** Form snipet to use instead the original multiple_select to show icons 
+in multiple options fileds when adding or editing a resource
 
 ## Config settings
 ### Config (.ini) file
-To use the custom GeoDCAT-AP schema in `ckanext-scheming`:
+To use the custom GeoDCAT-AP schema in `ckanext-facet-scheming`:
 
   ```ini
   scheming.dataset_schemas = ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
@@ -120,7 +233,7 @@ To use the custom GeoDCAT-AP schema in `ckanext-scheming`:
   scheming.presets = ckanext.facet_scheming:scheming_schemas/presets.json
   ```
 
-There are not mandatory sets in the config file for this extension. You can use the following sets:
+There are not more mandatory sets in the config file for this extension. You can use the following sets:
 
   ```ini
   facet_scheming.facet_list: [list of fields]      # List of fields in scheming file to use to faceting. Use ckan defaults if not provided.
@@ -141,7 +254,8 @@ The same custom fields for faceting can be used when browsing organizations and 
   facet_scheming.group_custom_facets = true
   ```
 
-This two last settings are not mandatory. You can omit one or both (or set them to 'false'), and the default fields for faceting will be used instead.
+This two last settings are also not mandatory. You can omit one or both (or set them to 'false'), and the default fields for faceting will be used instead.
+Actually only group_custom_facets works, beeing organization_custom_facets management a TO-DO.
 
 ### Icons
 
@@ -238,80 +352,11 @@ do:
     python setup.py develop
     pip install -r dev-requirements.txt
 
-
-### Helpers
-
-`facet_scheming` provides a set of useful helpers to be used in templates
-
-- **fscheming\_default\_facet\_search\_operator**(): Returns the default 
-facet search operator: AND/OR (string)
-- **fscheming\_decode\_json**( json\_text ): Converts a JSON formatted text
- in a python object using ckan.common.json
-- **fscheming\_organization\_name**( id ): Returns the name of the organization
- given its id. Returns None if not found
-- **fscheming\_get_facet\_label**( facet ): Returns the label of a facet as
- defined in the scheming file
-- **fscheming\_get\_facet\_items\_dict**( facet, search\_facets=None, limit=None,
- exclude\_active=False, scheming\_choices=None): Returns the list of unselected 
- facet items (objects) for the given facet, sorted by the field indicated in the request.
-        Arguments:
-  - facet -- the name of the facet to filter.
-  - search\_facets -- dict with search facets. Taken from c.search_facets if not
-   defined
-  - limit -- the max. number of facet items to return. Taken from 
-  c.search\_facets_limits if not defined
-  - exclude\_active -- only return unselected facets.
-  - scheming\_choices -- scheming choices to use to get labels from values.
-   If not provided takes `display\_name` field provided by Solr
-- **fscheming\_new\_order\_url**(name, concept): Returns a url with the order
- parameter for the given facet and concept to use.  
-    Based in the actual order it rotates ciclically from
-     \[no order\]->[direct order]->[inverse order] for the given concept \(name or count\)
-- **fscheming\_schema\_get\_icons\_dir**(field): Gets the icons' directory
- for the given field. It can be obtained (in order of preference) from the 
- _icons\_dir_ property for the given field in the scheming file, from the 
- _facet\_scheming.icons\_dir_ value  given in CKAN configuration file, plus
-  the name of the field, or from the directory named after the field name 
-  in `images/icons` dir.
-- **fscheming\_schema\_get\_default\_icon**(field): Gets the default 
- icon for the given field, defined in the schemig file, o `None` if not defined.
-- **fscheming\_schema\_icon**(choice, dir=None): Search for the icon path for 
- the especified choice beside the given dir (if any). If the scheming file include a _icon_ 
- setting for the choice, this is returned (beside the given _dir_).
-  If not, it takes the last fragment of the value url for the icon name, and 
-  the next two fragments of the url as two steps from _dir_ to the icon file.  
-  It locates the file searching for svg, png, jpeg or gif extensions in all 
-  the _public_ dirs of the ckan configured extensions. If the file could be 
-  located, it returns the relative url. If not, it returns `None`.
-- **fscheming\_get\_choice\_dic**(field, value): Gets the choice item for the 
-  given value in field of the scheming file. 
-
-### Templates
-
-Also a set of useful templates and snippets are provided
-
-- **fscheming\_facet\_list.html** Extending ckan original facet list 
-snippet, provides a way to show facet labels instead of values (which is what 
-Solr provides), prepending an icon if provided. To call you must extend the template 
-`package/search.html`.
-
-- **fscheming\_facet_search\_operator** Gives the control to select the operator used to
-combine facets. 
-
-- **multiple\_choice\_icon** Display snippet to use instead the original _multiple\_choice_ snippet
-provided by the scheming extension. It adds an icon before the label of the value.
-
-- **select\_icon** Display snippet to use instead the original _select_ snippet
-provided by the scheming extension. It adds an icon before the label of the value.
-
-- **multiple\_select-icon** Form snipet to use instead the original multiple_select to show icons 
-in multiple options fileds when adding or editing a resource
-
-
 ## Tests
 
 To run the tests, do:
 
+    pip install -r tests-requirements.txt
     pytest --ckan-ini=test.ini
 
 
