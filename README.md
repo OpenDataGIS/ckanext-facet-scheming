@@ -1,15 +1,8 @@
 # ckanext-facet_scheming
 
-`ckanext-facet_scheming` provides functions and templates that have been specially developed to extend the search functionality in CKAN for custom schemas.  It uses the fields defined in a scheming file to provide a set of tools to use these fields for scheming, and a way to include icons in their labels when displaying them.
+`ckanext-facet_scheming` provides functions and templates specifically designed to extend `ckanext-scheming` and includes DCAT enhancements to adapt CKAN Schema to [DCAT-AP](https://github.com/ckan/ckanext-dcat/).
 
 ![image](https://user-images.githubusercontent.com/96422458/235639244-4c2fc026-efec-460c-9800-62d2b5668b4a.png)
-
-
-
-## Requirements
-
->**Warning**<br>
-> This extension needs [custom GeoDCAT-AP ckanext-scheming](https://github.com/mjanez/ckanext-scheming) extension to work.
 
 `facet_scheming` is designed to provide templates and functions to be used by other extensions over it. It uses the fields defined in a scheming file to provide
  a set of tools to use those fields for scheming, and a way to include icons in its labels when displaying them.
@@ -18,7 +11,22 @@
  that has to be not installed in ckan. This means you must download ckanext-scheming and install it in  the ckan enviroment (pip install), but don't add it to
  ckan.plugins in the configuration .ini file. 
 
-Compatibility with core CKAN versions:
+Particulary:
+- The search functionality in CKAN for custom schemas. It uses the fields defined in a scheming file to provide a set of tools to use these fields for scheming, and a way to include icons in their labels when displaying them.
+- Could use the schemas for `ckanext-scheming` in the plugin like [CKAN GeoDCAT-AP schema](ckanext/facet_scheming/scheming_schemas/ckan_geodcatap.yaml)
+- Add Metadata downloads for Linked Open Data (`ckanext-dcat`) and Geospatial Metadata (ISO 19139, Dublin Core, etc.)
+
+>**Note**:<br>
+> Use a [custom schema](ckanext/facet_scheming/scheming_schemas/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541) for the spanish context ([NTI-RISP](https://datos.gob.es/en/documentacion/guia-de-aplicacion-de-la-norma-tecnica-de-interoperabilidad-de-reutilizacion-de)).
+
+## Requirements
+>**Warning**<br>
+>
+> This extension needs [ckanext-scheming](https://github.com/ckan/ckanext-scheming.git), 
+[ckanext-dcat](https://github.com/ckan/ckanext-dcat.git) and 
+[ckanext-harvest](https://github.com/ckan/ckanext-harvest.git) extensions to work properly.
+
+## Compatibility with core CKAN versions
 
 | CKAN version    | Compatible?   |
 | --------------- | ------------- |
@@ -130,11 +138,11 @@ To install ckanext-facet_scheming:
    Sometimes solr can issue an error while reindexing. In that case I'd try to 
    restart solr, delete index ("search-index clear"), restart solr, rebuild 
    index, and restart solr again.
-	
+   
    Ckan needs to "fix" multivalued fields to be able to recover values correctly
    for faceting, so this step must be done in order to use faceting with 
    multivalued fields. 
-     
+	
 ## Helpers
 
 `facet_scheming` provides a set of useful helpers to be used in templates
@@ -215,10 +223,17 @@ provided by the scheming extension. It adds an icon before the label of the valu
 in multiple options fileds when adding or editing a resource
 
 ## Config settings
-
 ### Config (.ini) file
+To use the custom GeoDCAT-AP schema in `ckanext-facet-scheming`:
 
-There are not mandatory sets in the config file for this extension. You can use the following sets:
+  ```ini
+  scheming.dataset_schemas = ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
+  scheming.group_schemas = ckanext.facet_scheming:scheming_schemas/ckan_group_geodcatap.json
+  scheming.organization_schemas = ckanext.facet_scheming:scheming_schemas/ckan_org_geodcatap.json
+  scheming.presets = ckanext.facet_scheming:scheming_schemas/presets.json
+  ```
+
+There are not more mandatory sets in the config file for this extension. You can use the following sets:
 
   ```ini
   facet_scheming.facet_list: [list of fields]      # List of fields in scheming file to use to faceting. Use ckan defaults if not provided.
@@ -239,7 +254,7 @@ The same custom fields for faceting can be used when browsing organizations and 
   facet_scheming.group_custom_facets = true
   ```
 
-This two last settings are not mandatory. You can omit one or both (or set them to 'false'), and the default fields for faceting will be used instead.
+This two last settings are also not mandatory. You can omit one or both (or set them to 'false'), and the default fields for faceting will be used instead.
 Actually only group_custom_facets works, beeing organization_custom_facets management a TO-DO.
 
 ### Icons
@@ -337,11 +352,11 @@ do:
     python setup.py develop
     pip install -r dev-requirements.txt
 
-
 ## Tests
 
 To run the tests, do:
 
+    pip install -r tests-requirements.txt
     pytest --ckan-ini=test.ini
 
 

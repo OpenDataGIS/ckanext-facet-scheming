@@ -95,14 +95,14 @@ def public_dir_exists(path):
     return False
 
 def init_config():
-    fs_config.data_links = _load_yaml('data_links.yaml')
-    fs_config.inspire_links = _load_yaml('inspire_links.yaml')
+    fs_config.linkeddata_links = _load_yaml('linkeddata_links.yaml')
+    fs_config.geometadata_links = _load_yaml('geometadata_links.yaml')
 
 def _load_yaml(file):
     source_path = Path(__file__).resolve(True)
     respuesta = {}
     try:
-        p = source_path.parent.joinpath('custom_config',file)
+        p = source_path.parent.joinpath('formats_config',file)
         with open(p,'r') as f:
             respuesta=yaml.load(f, Loader=SafeLoader )
     except FileNotFoundError:
@@ -114,17 +114,17 @@ def _load_yaml(file):
 
 def get_linked_data(id):
     if fs_config.debug:
-        data_links = _load_yaml('data_links.yaml')
+        linkeddata_links = _load_yaml('linkeddata_links.yaml')
     else:
-        data_links = fs_config.data_links
+        linkeddata_links = fs_config.linkeddata_links
 
     data=[]
     for name in CONTENT_TYPES:
         data.append({
             'name': name,
-            'display_name': data_links.get(name,{}).get('display_name',CONTENT_TYPES[name]),
-            'image_display_url': data_links.get(name,{}).get('image_display_url',None),
-            'description': data_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name]),
+            'display_name': linkeddata_links.get(name,{}).get('display_name',CONTENT_TYPES[name]),
+            'image_display_url': linkeddata_links.get(name,{}).get('image_display_url',None),
+            'description': linkeddata_links.get(name,{}).get('description','Tipos '+CONTENT_TYPES[name]),
             'endpoint_data':{
                 '_id': id,
                 '_format': name,
@@ -135,17 +135,17 @@ def get_linked_data(id):
 
 def get_inspire():
     if fs_config.debug:
-        inspire_links = _load_yaml('inspire_links.yaml')
+        geometadata_links = _load_yaml('geometadata_links.yaml')
     else:
-        inspire_links = fs_config.inspire_links
+        geometadata_links = fs_config.geometadata_links
     data=[]
-    for item in inspire_links.get('inspire_formats',{}):
+    for item in geometadata_links.get('inspire_formats',{}):
         data.append({
             'name': item['name'],
             'display_name': item['display_name'],
             'image_display_url': item['image_display_url'],
             'description': item['description'],
-            'url': inspire_links['inspire_link'].format(schema=item['outputSchema'],id='{id}')
+            'url': geometadata_links['inspire_link'].format(schema=item['outputSchema'],id='{id}')
         })
 
     return data
