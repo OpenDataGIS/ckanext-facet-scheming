@@ -60,8 +60,8 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
           pip install -e .
-          pip install -e ckanext-scheming @ git+https://github.com/ckan/ckanext-scheming.git
-          pip install -e ckanext-dcat @ git+https://github.com/ckan/ckanext-dcat.git
+          pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+          pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
 
           
           # Replace default path to CKAN core config file with the one on the container
