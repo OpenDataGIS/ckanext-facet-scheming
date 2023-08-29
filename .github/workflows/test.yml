@@ -64,11 +64,9 @@ jobs:
             gcc \
             libxml2-dev \
             libxslt-dev
-          python --version
-          
-
       - name: Install requirements
         run: |
+          python --version
           # pwd
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
