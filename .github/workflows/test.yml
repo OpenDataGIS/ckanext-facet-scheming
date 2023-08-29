@@ -62,7 +62,8 @@ jobs:
           pip --version
       - name: Install ckanext-spatial system dependencies
         run: |
-          apk add --no-cache \
+          apt update
+          apt install \
             geos \
             geos-dev \
             proj-util \
