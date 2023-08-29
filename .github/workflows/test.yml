@@ -24,8 +24,8 @@ jobs:
     #  fail-fast: false
     name: CKAN 2.9
     runs-on: ubuntu-20.04
-    container:
-      image: openknowledge/ckan-dev:2.9
+    #container:
+    #  image: openknowledge/ckan-dev:2.9
       #${{ matrix.ckan-version }}
     #services:
     #  solr:
