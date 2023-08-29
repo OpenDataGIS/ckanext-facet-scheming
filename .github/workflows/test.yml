@@ -60,19 +60,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip --version
-      - name: Install ckanext-spatial system dependencies
-        run: |
-          sudo apt update
-          sudo apt install \
-            geos \
-            geos-dev \
-            proj-util \
-            proj-dev \
-            libxml2 \
-            libxslt1.1 \
-            gcc \
-            libxml2-dev \
-            libxslt-dev
       - name: Install requirements
         run: |
           pip --version
