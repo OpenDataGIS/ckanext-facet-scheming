@@ -53,7 +53,7 @@ jobs:
     #      with:
     #        repository: mjanez/ckanext-scheming
       - name: Install ckanext-spatial system dependencies
-        run:
+        run: |
           apk add --no-cache \
             geos \
             geos-dev \
