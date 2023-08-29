@@ -76,7 +76,7 @@ jobs:
           pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
           pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
           pip install -r /srv/app/src/ckanext-dcat/requirements.txt
-          pip install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0"
+          pip install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0#egg=ckanext-spatial"
           pip install -r /srv/app/src/ckanext-spatial/requirements.txt
           pip install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
           pip install -r /srv/app/src/ckanext-harvest/requirements.txt
