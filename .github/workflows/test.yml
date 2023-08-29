@@ -69,7 +69,7 @@ jobs:
             proj-util \
             proj-dev \
             libxml2 \
-            libxslt \
+            libxslt1.1 \
             gcc \
             libxml2-dev \
             libxslt-dev
