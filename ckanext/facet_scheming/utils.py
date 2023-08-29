@@ -113,11 +113,10 @@ def _load_yaml(file):
 
 
 def get_linked_data(id):
-    if fs_config.debug:
-        linkeddata_links = _load_yaml('linkeddata_links.yaml')
-    else:
-        linkeddata_links = fs_config.linkeddata_links
+    if not fs_config.linkeddata_links:
+        fs_config.linkeddata_links = _load_yaml('linkeddata_links.yaml')
 
+    linkeddata_links=fs_config.linkeddata_links
     data=[]
     for name in CONTENT_TYPES:
         data.append({
@@ -134,10 +133,10 @@ def get_linked_data(id):
     return data
 
 def get_inspire():
-    if fs_config.debug:
-        geometadata_links = _load_yaml('geometadata_links.yaml')
-    else:
-        geometadata_links = fs_config.geometadata_links
+    if not fs_config.geometadata_links:
+        fs_config.geometadata_links = _load_yaml('geometadata_links.yaml')
+
+    geometadata_links = fs_config.geometadata_links
     data=[]
     for item in geometadata_links.get('inspire_formats',{}):
         data.append({
