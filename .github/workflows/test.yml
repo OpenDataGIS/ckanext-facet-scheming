@@ -64,6 +64,8 @@ jobs:
             gcc \
             libxml2-dev \
             libxslt-dev
+          python --version
+          
 
       - name: Install requirements
         run: |
