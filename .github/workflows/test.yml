@@ -24,8 +24,8 @@ jobs:
     #  fail-fast: false
     name: CKAN 2.9
     runs-on: ubuntu-20.04
-    #container:
-    #  image: openknowledge/ckan-dev:2.9
+    container:
+      image: openknowledge/ckan-dev:2.9
       #${{ matrix.ckan-version }}
     #services:
     #  solr:
@@ -60,7 +60,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip --version
-          python pip --version
       - name: Install ckanext-spatial system dependencies
         run: |
           apk add --no-cache \
