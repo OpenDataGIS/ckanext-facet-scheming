@@ -25,7 +25,7 @@ jobs:
     name: CKAN 2.9
     runs-on: ubuntu-20.04
     container:
-      image: openknowledge/ckan-dev:2.9
+      image: ghcr.io/mjanez/ckan-base-spatial:ckan-2.9.9
       #${{ matrix.ckan-version }}
     services:
       solr:
