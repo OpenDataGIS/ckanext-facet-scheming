@@ -57,26 +57,28 @@ jobs:
       - name: Actualize pip
         run: |
           pip3 --version
+          pip3 install --upgrade pip
+          pip3 install setuptools wheel
           #python --version
           #python -m pip install --upgrade pip
           #pip install -r requirements.txt
           #pip --version
       - name: Install requirements
         run: |
-          pip --version
+          pip3 --version
           # pwd
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -e .
-          pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
-          pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
-          pip install -r /srv/app/src/ckanext-dcat/requirements.txt
-          pip install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0#egg=ckanext-spatial"
-          pip install -r /srv/app/src/ckanext-spatial/requirements.txt
-          pip install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
-          pip install -r /srv/app/src/ckanext-harvest/requirements.txt
+          pip3 install --upgrade pip
+          pip3 install -r requirements.txt
+          pip3 install -e .
+          pip3 install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+          pip3 install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
+          pip3 install -r /srv/app/src/ckanext-dcat/requirements.txt
+          pip3 install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0#egg=ckanext-spatial"
+          pip3 install -r /srv/app/src/ckanext-spatial/requirements.txt
+          pip3 install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
+          pip3 install -r /srv/app/src/ckanext-harvest/requirements.txt
           
           # Replace default path to CKAN core config file with the one on the container
           sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
