@@ -57,6 +57,7 @@ jobs:
       - name: Actualize pip
         run: |
           pip --version
+          python3.9 --version
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip --version
