@@ -72,6 +72,7 @@ jobs:
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
           pip3 install --upgrade pip
+          pip3 install --upgrade cython
           pip3 install pyproj==2.6.1
           pip3 install -e .
           pip3 install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
