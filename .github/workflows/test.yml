@@ -24,8 +24,8 @@ jobs:
     #  fail-fast: false
     name: CKAN 2.9
     runs-on: ubuntu-20.04
-    #container:
-    #  image: openknowledge/ckan-dev:2.9
+    container:
+      image: openknowledge/ckan-dev:2.9
       #${{ matrix.ckan-version }}
     services:
       solr:
@@ -48,8 +48,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: setup python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
     #    - uses: actions/checkout@v3
@@ -57,6 +56,7 @@ jobs:
     #        repository: mjanez/ckanext-scheming
       - name: Actualize pip
         run: |
+          pip --version
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip --version
