@@ -67,6 +67,7 @@ jobs:
       - name: Install requirements
         run: |
           pip3 --version
+          apt install libc6
           # pwd
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
