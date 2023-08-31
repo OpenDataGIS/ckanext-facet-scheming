@@ -73,13 +73,14 @@ jobs:
           pip3 install --upgrade pip
           pip3 install --upgrade Cython
           pip3 list
-          pip3 install pyproj==2.6.1
+          #pip3 install pyproj==2.6.1
           pip3 install -e .
           pip3 install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
           pip3 install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
           pip3 install -r /srv/app/src/ckanext-dcat/requirements.txt
           pip3 install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0#egg=ckanext-spatial"
-          pip3 install -r /srv/app/src/ckanext-spatial/requirements.txt
+          pip3 install -r https://raw.githubusercontent.com/mjanez/ckan-docker/master/ckan/req_fixes/ckanext-spatial_requirements.txt
+          #pip3 install -r /srv/app/src/ckanext-spatial/requirements.txt
           pip3 install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
           pip3 install -r /srv/app/src/ckanext-harvest/requirements.txt
           
