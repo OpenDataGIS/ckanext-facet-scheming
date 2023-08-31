@@ -22,11 +22,13 @@ Particulary:
 ## Requirements
 >**Warning**<br>
 >
-> This extension needs [ckanext-scheming](https://github.com/ckan/ckanext-scheming.git), 
-[ckanext-dcat](https://github.com/ckan/ckanext-dcat.git) and 
-[ckanext-harvest](https://github.com/ckan/ckanext-harvest.git) extensions to work properly.
+> This extension needs these extensions to work properly:
+- [ckanext-scheming](https://github.com/ckan/ckanext-scheming.git), 
+- [ckanext-dcat](https://github.com/ckan/ckanext-dcat.git)
+- [ckanext-spatial](https://github.com/ckan/ckanext-spatial.git) 
+- [ckanext-harvest](https://github.com/ckan/ckanext-harvest.git)
 
-## Compatibility with core CKAN versions
+## Compatibility with core CKAN versions and extensions
 
 | CKAN version    | Compatible?   |
 | --------------- | ------------- |
@@ -36,18 +38,31 @@ Particulary:
 
 Compatibility with ckanex-scheming versions:
 
-| CKAN version    | Compatible?   |
+| ckanex-scheming | Compatible?   |
 | --------------- | ------------- |
 | pre 3.0.0       | not tested    |
 | 3.0.0           | yes           |
 
+Compatibility with ckanex-dcat versions:
 
-Suggested values:
+| ckanext-dcat    | Compatible?   |
+| --------------- | ------------- |
+| pre 1.4.0       | not tested    |
+| 1.4.0           | yes           |
 
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+Compatibility with ckanex-spatial versions:
+
+| ckanext-spatial | Compatible?   |
+| --------------- | ------------- |
+| pre 2.0.0       | not tested    |
+| 2.0.0           | yes           |
+
+Compatibility with ckanex-harvest versions:
+
+| ckanext-harvest | Compatible?   |
+| --------------- | ------------- |
+| pre 1.4.2       | not tested    |
+| 1.4.2           | yes           |
 
 
 ## Installation
@@ -61,7 +76,9 @@ To install ckanext-facet_scheming:
 
 2. Install ckanext-scheming in the enviroment (pip install), but not in the ckan config file.
 
-3. Clone the source and install it on the virtualenv
+3. Install the other extensions following their instructions.
+
+4. Clone the source and install it on the virtualenv
 
     ```bash 
     git clone https://github.com/dsanjurj/ckanext-facet_scheming.git
@@ -70,11 +87,15 @@ To install ckanext-facet_scheming:
     pip install -r requirements.txt
     ```
 
-4. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
+5. Add `facet_scheming` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
    
-5. Remember to point the schemas files in the config file. If you keep them into the proposed directories, the ckan config files mus be like:
+   If you haven't done it yet, include dcat, spatial and harvest extensions in 
+   `ckan.plugins` too, as stated at their respectives documentation.
+   
+6. Remember to point the schemas files in the config file. If you keep them into
+   the proposed directories, the ckan config files mus be like:
 
    '''ini
    scheming.dataset_schemas =  ckanext.facet_scheming:scheming_schemas/ckan_geodcatap.yaml
@@ -87,11 +108,11 @@ To install ckanext-facet_scheming:
   
    Look at "Config (.ini) file" section for more details to configure the extension.
 
-6. Clear the index in solr:
+7. Clear the index in solr:
 
 	`ckan -c [route to your .ini ckan config file] search-index clear`
    
-7. Modify the schema file on Solr (schema or managed schema) to add the 
+8. Modify the schema file on Solr (schema or managed schema) to add the 
    multivalued fields added in the scheming extension used for faceting. 
    You can add any field defined in the schema file used in the 
    ckanext-scheming extension that you want to use for faceting.
@@ -127,11 +148,11 @@ To install ckanext-facet_scheming:
    	
    Be sure to restart Solr after modify the schema.
 	
-8. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+9. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
      `sudo service apache2 reload`
      
-9. Reindex solr index:
+10. Reindex solr index:
 
 	`ckan -c [route to your .ini ckan config file] search-index rebuild`
 

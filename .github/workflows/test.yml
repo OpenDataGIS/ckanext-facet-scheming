@@ -3,12 +3,14 @@ run-name: ${{ github.actor }} probando facet-scheming-test
 on: [push, pull_request]
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: 3.9
+      - name: check pip version
+        run: pip --version
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Check syntax
@@ -21,9 +23,9 @@ jobs:
     #    ckan-version: ["2.10", 2.9]
     #  fail-fast: false
     name: CKAN 2.9
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
-      image: openknowledge/ckan-dev:2.9
+      image: ghcr.io/mjanez/ckan-base-spatial:ckan-2.9.9
       #${{ matrix.ckan-version }}
     services:
       solr:
@@ -46,25 +48,42 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+      #- uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.9'
     #    - uses: actions/checkout@v3
     #      with:
     #        repository: mjanez/ckanext-scheming
+      - name: Actualize pip
+        run: |
+          pip3 --version
+          pip3 install --upgrade pip
+          pip3 install -r requirements.txt
+          pip3 install setuptools wheel
+          #python --version
+          #python -m pip install --upgrade pip
+          #pip install -r requirements.txt
+          #pip --version
       - name: Install requirements
         run: |
+          pip3 --version
           # pwd
           echo $GITHUB_WORKSPACE
           # ls -al $GITHUB_WORKSPACE
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -e .
-          pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
-          pip install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
-          pip install -r /srv/app/src/ckanext-dcat/requirements.txt
-          pip install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
-          pip install -r /srv/app/src/ckanext-harvest/requirements.txt
+          pip3 install --upgrade pip
+          pip3 install --upgrade Cython
+          pip3 install -r /srv/app/src/ckan/dev-requirements.txt
+          pip3 list
+          #pip3 install pyproj==2.6.1
+          pip3 install -e .
+          pip3 install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+          pip3 install -e "git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat"
+          pip3 install -r /srv/app/src/ckanext-dcat/requirements.txt
+          pip3 install -e "git+https://github.com/ckan/ckanext-spatial.git@v2.0.0#egg=ckanext-spatial"
+          pip3 install -r https://raw.githubusercontent.com/mjanez/ckan-docker/master/ckan/req_fixes/ckanext-spatial_requirements.txt
+          #pip3 install -r /srv/app/src/ckanext-spatial/requirements.txt
+          pip3 install -e "git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest"
+          pip3 install -r /srv/app/src/ckanext-harvest/requirements.txt
           
           # Replace default path to CKAN core config file with the one on the container
           sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini

@@ -546,7 +546,7 @@ dataset_fields:
   label: 
     en: Date of last revision
     es: Fecha de última modificación
-    validators: not_empty scheming_required
+  validators: not_empty scheming_required
   display_property: dct:modified
   required: true
   preset: date
@@ -1170,7 +1170,7 @@ dataset_fields:
   field_name: theme
   label:
     en: INSPIRE Themes
-    es: Temitas INSPIRE
+    es: Temas INSPIRE
   validators: ignore_missing facet_scheming_multiple_choice
   form_snippet: facet_scheming/form_snippets/multiple_select_icon.html
   display_property: dcat:theme

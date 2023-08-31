@@ -6,12 +6,14 @@ Renders a media item for a custom data. This should be used in a list.
 
 custom_data - A custom_data dict.
 id - dataset's id
+endpoint - endpoint to aim url to, if it is in the app
+position - position of the item in the array of items it is in.
 
 Example:
 
     <ul class="media-grid">
       {% for custom_data in custom_data_list %}
-        {% snippet "facet_scheming/custom_data/snippets/custom_data_item.html", custom_data=custom_data, id=id %}
+        {% snippet "facet_scheming/custom_data/snippets/custom_data_item.html", custom_data=custom_data, id=id, endpoint=endpoint, position=loop.index %}
       {% endfor %}
     </ul>
 #}
@@ -36,7 +38,7 @@ Example:
     {% endif %}
   {% endblock %}
   {% block link %}
-  <a href="{{ url }}" title="{{ _('View {name}').format(name=custom_data.display_name) }}" class="media-view" target="_blank">
+  <a href="{{ url|safe }}" title="{{ _('View {name}').format(name=custom_data.display_name) }}" class="media-view" target="_blank">
     <span>{{ _('View {name}').format(name=custom_data.display_name) }}</span>
   </a>
   {% endblock %}

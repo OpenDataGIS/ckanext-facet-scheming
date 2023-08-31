@@ -3,6 +3,6 @@ icons_dir = 'images/icons'
 default_locale = 'es'
 organization_custom_facets = False
 group_custom_facets = False
-debug = False
+debug = True
 linkeddata_links = None
 geometadata_links = None

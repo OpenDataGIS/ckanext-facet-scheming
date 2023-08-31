@@ -46,3 +46,4 @@ docs/_build/
 # Eclipse
 .project/
 .pydevproject/
+/.pytest_cache/
